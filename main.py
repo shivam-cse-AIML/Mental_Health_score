@@ -1,4 +1,4 @@
-import joblib
+import joblib 
 import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
@@ -51,10 +51,8 @@ def greet():
 
 @app.post('/predict', response_model=PredictionResponse) #6.77777
 def predict(data: StudentData):
-   
-   country_group = data.country if data.country in top_countries else "Other"
-
-   input_row = pd.DataFrame([{
+    country_group = data.country if data.country in top_countries else "Other"
+    input_row = pd.DataFrame([{
         'Age'                       :data.age,
         'Gender'                    :data.gender,
         'Country'                   :data.country,
@@ -68,7 +66,7 @@ def predict(data: StudentData):
         'Sleep_Hours_Per_Night'     :data.sleep_hours_per_night,
         'Stress_Level'              :data.stress_level,
         'Grouped_country'           :country_group
-   }])
+    }])
 
-   prediction = model.predict(input_row)[0] #6.77
-   return PredictionResponse(predicted_mental_health_score=round(float(prediction),2))
+    prediction = model.predict(input_row)[0] #6.77
+    return PredictionResponse(predicted_mental_health_score=round(float(prediction),2))
